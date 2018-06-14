@@ -6,7 +6,6 @@
 package view;
 
 import controller.UserController;
-import java.util.Arrays;
 import static javax.swing.JOptionPane.showMessageDialog;
 import model.domain.User;
 
@@ -14,15 +13,16 @@ import model.domain.User;
  *
  * @author mateu
  */
-public class CadastroView extends javax.swing.JInternalFrame {
+public class CadastroView extends javax.swing.JFrame {
 
     /**
-     * Creates new form CadastroView
+     * Creates new form CadastroView2
      */
     private UserController userController;
     public CadastroView() {
         initComponents();
         this.userController = new UserController();
+        
     }
 
     /**
@@ -46,8 +46,7 @@ public class CadastroView extends javax.swing.JInternalFrame {
         CPassField = new javax.swing.JPasswordField();
         PassField = new javax.swing.JPasswordField();
 
-        setClosable(true);
-        setTitle("Cadastro de Usuários");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel2.setText("Nome");
 
@@ -104,7 +103,7 @@ public class CadastroView extends javax.swing.JInternalFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(PassField, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE))
+                    .addComponent(PassField, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -132,7 +131,7 @@ public class CadastroView extends javax.swing.JInternalFrame {
                 .addComponent(CPassField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -151,21 +150,51 @@ public class CadastroView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_EmailTextFieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        User user = new User();
         String passText = new String(PassField.getPassword());
         String CpassText = new String(CPassField.getPassword());
+
         if(passText.equals( CpassText)){
-            user.setNome(NameTextField.getText());
-            user.setLogin(LoginTextField.getText());
-            user.setEmail(EmailTextField.getText());
-            user.setSenha(passText); 
-            this.userController.Cadastro(user);
-        }else{
-            showMessageDialog(null, "As senhas não são iguais");
+            User user = new User(NameTextField.getText(),EmailTextField.getText(),LoginTextField.getText(),passText);
+            showMessageDialog(null,this.userController.Cadastro(user));
+            this.setVisible(false);
         }
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(CadastroView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(CadastroView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(CadastroView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(CadastroView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroView().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField CPassField;

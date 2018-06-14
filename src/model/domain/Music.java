@@ -28,7 +28,12 @@ public class Music {
     @Column(name="path")
     private String path;
     
-    Music(String name,String path){
+    public Music(String name,String path){
+        this.name = name;
+        this.path = path;
+    }
+    public Music(Integer id,String name,String path){
+        this.id = id;
         this.name = name;
         this.path = path;
     }

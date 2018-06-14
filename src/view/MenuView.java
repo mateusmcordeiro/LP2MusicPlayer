@@ -5,6 +5,9 @@
  */
 package view;
 
+import controller.PlayListController;
+import javax.swing.JFrame;
+
 /**
  *
  * @author mateu
@@ -14,8 +17,13 @@ public class MenuView extends javax.swing.JFrame {
     /**
      * Creates new form MenuView
      */
+    public static PlayListController playListController;
     public MenuView() {
         initComponents();
+        InitPlayList initPlayList  = new InitPlayList();
+        this.MidPane.add(initPlayList);
+        initPlayList.setVisible(true);
+        playListController = new PlayListController();
 
     }
 
@@ -121,14 +129,15 @@ public class MenuView extends javax.swing.JFrame {
                     .addComponent(CadastroButton)
                     .addComponent(LoginButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(MidPane, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(MidPane, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(sliderMusic, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PlayMusicButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(previousMusicButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NextMusicButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(NextMusicButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -143,9 +152,8 @@ public class MenuView extends javax.swing.JFrame {
     }//GEN-LAST:event_fileMenuActionPerformed
 
     private void CadastroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroButtonActionPerformed
-        CadastroView cadastroView  = new CadastroView();
-        this.MidPane.add(cadastroView);
-        cadastroView.setVisible(true);
+        CadastroView frame = new CadastroView();
+        frame.setVisible(true);
     }//GEN-LAST:event_CadastroButtonActionPerformed
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed

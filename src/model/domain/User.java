@@ -28,24 +28,30 @@ public class User {
     @Column(name="id")
     private Integer id;
     
-    @Column(name="nome")
-    private String nome;
-    @Column(name="email")
+    @Column(name="name",nullable=false)
+    private String name;
+    @Column(name="email",unique = true,nullable=false)
     private String email;
-    @Column(name="login")
+    @Column(name="login",unique = true,nullable=false)
     private String login;
-    @Column(name="senha")
-    private String senha;
+    @Column(name="password",nullable=false)
+    private String password;
     
     @OneToMany
     private List<PlayList> playLists;
     
     public User(String nome,String email,String login,String senha){
        this.playLists = new ArrayList<>();
-       this.nome = nome;
+       this.name = nome;
        this.email  = email;
        this.login = login;
-       this.senha = senha;
+       this.password = senha;
+        
+    }
+    public User(String login,String senha){
+       this.playLists = new ArrayList<>();
+       this.login = login;
+       this.password = senha;
         
     }
     public User(){
@@ -86,13 +92,7 @@ public class User {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
-    }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
     public String getEmail() {
         return email;
@@ -110,12 +110,27 @@ public class User {
         this.login = login;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getName() {
+        return name;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public void HashPassword(){
+        this.password = BCrypt.hashpw(this.password, BCrypt.gensalt(12));
+    }
+    public boolean VerifyPasswordHash(String Password,String PasswordHashed){
+        return BCrypt.checkpw(Password, PasswordHashed);
     }
 
     

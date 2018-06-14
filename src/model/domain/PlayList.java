@@ -52,4 +52,14 @@ public class PlayList {
         this.name = name;
     }
     
+    public void addMusic(Music music){
+        Musics.add(music);
+    }
+    public void removeMusic(Music music){
+        Musics.remove(music);
+    }
+    public ArrayList getPlayList(){
+        return (ArrayList)this.Musics;
+    }
+    
 }

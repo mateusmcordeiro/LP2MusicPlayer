@@ -5,6 +5,13 @@
  */
 package view;
 
+import controller.UserController;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static javax.swing.JOptionPane.showMessageDialog;
+import model.domain.User;
+import model.domain.UserException;
+
 /**
  *
  * @author mateu
@@ -14,8 +21,10 @@ public class LoginView extends javax.swing.JInternalFrame {
     /**
      * Creates new form LoginView
      */
+    private UserController userController;
     public LoginView() {
         initComponents();
+        this.userController = new UserController();
     }
 
     /**
@@ -29,18 +38,31 @@ public class LoginView extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        LoginTextField = new javax.swing.JTextField();
+        LoginButton = new javax.swing.JToggleButton();
+        PasswordTextField = new javax.swing.JPasswordField();
 
         setClosable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Login de Usuários");
 
         jLabel1.setText("Login");
 
         jLabel2.setText("Senha");
 
-        jToggleButton1.setText("Fazer Login");
+        LoginButton.setText("Fazer Login");
+        LoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginButtonActionPerformed(evt);
+            }
+        });
+
+        PasswordTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PasswordTextFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -49,15 +71,14 @@ public class LoginView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LoginTextField)
+                    .addComponent(LoginButton, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField1)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(PasswordTextField))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -66,25 +87,41 @@ public class LoginView extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(LoginTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jToggleButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(PasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(LoginButton)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void PasswordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PasswordTextFieldActionPerformed
+
+    private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
+        
+        String passText = new String(PasswordTextField.getPassword());
+        User user = new User(LoginTextField.getText(),passText);
+        showMessageDialog(null,this.userController.Login(user));
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_LoginButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton LoginButton;
+    private javax.swing.JTextField LoginTextField;
+    private javax.swing.JPasswordField PasswordTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
