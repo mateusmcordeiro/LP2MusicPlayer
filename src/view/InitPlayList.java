@@ -106,7 +106,7 @@ public class InitPlayList extends javax.swing.JInternalFrame {
         MusicSelect.setCurrentDirectory(new File(System.getProperty("user.home")));
         MusicSelect.setDialogTitle("Procurar Musica");
         
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("musica","mp3");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("mp3","mp3");
         
         MusicSelect.setFileFilter(filter);
         MusicSelect.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -122,7 +122,6 @@ public class InitPlayList extends javax.swing.JInternalFrame {
             MenuView.playListController.AddMusic(music);
             ArrayList playlistAtual = MenuView.playListController.getPlayList();
             
-            
             DefaultListModel listModel = new DefaultListModel();  
             
             for (Iterator it = playlistAtual.iterator(); it.hasNext();) {
@@ -130,7 +129,7 @@ public class InitPlayList extends javax.swing.JInternalFrame {
                 listModel.addElement(m.getName());
             }
             
-            this.MusicList = new JList(listModel);
+            this.MusicList.setModel(listModel);
             
             
             
