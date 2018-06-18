@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
-import javax.swing.JList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.domain.Music;
 
@@ -25,8 +26,65 @@ public class InitPlayList extends javax.swing.JInternalFrame {
      */
     public InitPlayList() {
         initComponents();
+        MusicList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent evt) {
+              if (!MusicList.getValueIsAdjusting()) {
+                MenuView.playListController.setIndexMusicSelected(MusicList.getSelectedIndex());
+              }
+            }
+          });
+  
+        
     }
+    public void AddLista(){
+        JFileChooser MusicSelect = new JFileChooser();
+        MusicSelect.setCurrentDirectory(new File(System.getProperty("user.home")));
+        MusicSelect.setDialogTitle("Procurar Musica");
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("mp3","mp3");
+        
+        MusicSelect.setFileFilter(filter);
+        MusicSelect.setMultiSelectionEnabled(true);
+        MusicSelect.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int retorno = MusicSelect.showOpenDialog(this);
+        
+        if(retorno == MusicSelect.APPROVE_OPTION){
 
+            File[] MusicSelected = MusicSelect.getSelectedFiles();
+            for(File f:MusicSelected){
+                String MusicName = f.getName();
+                String MusicPath = f.getAbsolutePath();
+                Integer MusicId = MenuView.playListController.getPlayList().size();
+                Music music = new Music(MusicId,MusicName,MusicPath);
+                MenuView.playListController.AddMusic(music);
+            }
+            
+            ArrayList playlistAtual = MenuView.playListController.getPlayList();
+            
+            DefaultListModel listModel = new DefaultListModel();  
+            
+            for (Iterator it = playlistAtual.iterator(); it.hasNext();) {
+                Music m = (Music) it.next();
+                listModel.addElement(m.getName());
+            }
+            
+            this.MusicList.setModel(listModel);
+        }
+    }
+    public void removeLista(){
+        int index  = this.MusicList.getSelectedIndex();
+        MenuView.playListController.RemoveMusic(MenuView.playListController.getMusic(index));
+        ArrayList playlistAtual = MenuView.playListController.getPlayList();
+            
+        DefaultListModel listModel = new DefaultListModel();  
+            
+        for (Iterator it = playlistAtual.iterator(); it.hasNext();) {
+            Music m = (Music) it.next();
+            listModel.addElement(m.getName());
+        }
+            
+            this.MusicList.setModel(listModel);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,6 +122,11 @@ public class InitPlayList extends javax.swing.JInternalFrame {
         });
 
         jButton2.setText("Remover Selecionada");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,42 +165,12 @@ public class InitPlayList extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
-        JFileChooser MusicSelect = new JFileChooser();
-        MusicSelect.setCurrentDirectory(new File(System.getProperty("user.home")));
-        MusicSelect.setDialogTitle("Procurar Musica");
-        
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("mp3","mp3");
-        
-        MusicSelect.setFileFilter(filter);
-        MusicSelect.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int retorno = MusicSelect.showOpenDialog(this);
-        
-        if(retorno == MusicSelect.APPROVE_OPTION){
-            
-            File MusicSelected = MusicSelect.getSelectedFile();
-            String MusicName = MusicSelected.getName();
-            String MusicPath = MusicSelected.getAbsolutePath();
-            Integer MusicId = MenuView.playListController.getPlayList().size();
-            Music music = new Music(MusicId,MusicName,MusicPath);
-            MenuView.playListController.AddMusic(music);
-            ArrayList playlistAtual = MenuView.playListController.getPlayList();
-            
-            DefaultListModel listModel = new DefaultListModel();  
-            
-            for (Iterator it = playlistAtual.iterator(); it.hasNext();) {
-                Music m = (Music) it.next();
-                listModel.addElement(m.getName());
-            }
-            
-            this.MusicList.setModel(listModel);
-            
-            
-            
-            
-            
-
-        }
+        AddLista();
     }//GEN-LAST:event_AddButtonActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        removeLista();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
