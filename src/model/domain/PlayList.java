@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -32,9 +33,11 @@ public class PlayList {
     
     @OneToMany
     private List<Music> Musics; 
+    private DefaultListModel listModel;
 
     public PlayList() {
         this.Musics = new ArrayList<>();
+        this.listModel = new DefaultListModel(); 
     }
 
     public Integer getId() {
@@ -55,9 +58,11 @@ public class PlayList {
     
     public void addMusic(Music music){
         Musics.add(music);
+        listModel.addElement(music.getName());
     }
     public void removeMusic(Music music){
         Musics.remove(music);
+        listModel.removeElement(music.getName());
     }
     public ArrayList getPlayList(){
         return (ArrayList)this.Musics;
@@ -88,5 +93,11 @@ public class PlayList {
     public int getTotalNumber(){
         return this.Musics.size();
     }
-    
+    public DefaultListModel getListModel(){
+        return this.listModel;
+    }
+
+    public void stop(int indice) {
+        Musics.get(indice).stop();
+    }
 }

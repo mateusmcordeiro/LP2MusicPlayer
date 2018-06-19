@@ -26,6 +26,7 @@ public class InitPlayList extends javax.swing.JInternalFrame {
      */
     public InitPlayList() {
         initComponents();
+        
         MusicList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent evt) {
               if (!MusicList.getValueIsAdjusting()) {
@@ -58,32 +59,16 @@ public class InitPlayList extends javax.swing.JInternalFrame {
                 Music music = new Music(MusicId,MusicName,MusicPath);
                 MenuView.playListController.AddMusic(music);
             }
-            
-            ArrayList playlistAtual = MenuView.playListController.getPlayList();
-            
-            DefaultListModel listModel = new DefaultListModel();  
-            
-            for (Iterator it = playlistAtual.iterator(); it.hasNext();) {
-                Music m = (Music) it.next();
-                listModel.addElement(m.getName());
-            }
-            
+                        
+            DefaultListModel listModel = MenuView.playListController.getListModel();
             this.MusicList.setModel(listModel);
         }
     }
     public void removeLista(){
         int index  = this.MusicList.getSelectedIndex();
         MenuView.playListController.RemoveMusic(MenuView.playListController.getMusic(index));
-        ArrayList playlistAtual = MenuView.playListController.getPlayList();
-            
-        DefaultListModel listModel = new DefaultListModel();  
-            
-        for (Iterator it = playlistAtual.iterator(); it.hasNext();) {
-            Music m = (Music) it.next();
-            listModel.addElement(m.getName());
-        }
-            
-            this.MusicList.setModel(listModel);
+        DefaultListModel listModel = MenuView.playListController.getListModel();
+        this.MusicList.setModel(listModel);
     }
     /**
      * This method is called from within the constructor to initialize the form.

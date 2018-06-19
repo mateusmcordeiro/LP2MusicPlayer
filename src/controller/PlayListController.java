@@ -6,6 +6,7 @@ import javafx.scene.media.MediaPlayer;
 import model.domain.Music;
 import model.domain.PlayList;
 import java.util.Observable;
+import javax.swing.DefaultListModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,6 +21,8 @@ import java.util.Observable;
 public class PlayListController extends Observable {
     public PlayList playList;
     public int IndexMusicSelected;
+    
+
     
     public PlayListController(){
         playList = new PlayList();
@@ -46,6 +49,9 @@ public class PlayListController extends Observable {
     public void PauseMusic(){
         this.playList.pause(this.IndexMusicSelected);
     }
+    public void StopMusic(){
+        this.playList.stop(this.IndexMusicSelected);
+    }
     public ArrayList getPlayList(){
         return this.playList.getPlayList();
     }
@@ -60,6 +66,9 @@ public class PlayListController extends Observable {
     }
     public int getTotalNumber(){
         return this.playList.getTotalNumber();
+    }
+    public DefaultListModel getListModel(){
+        return this.playList.getListModel();
     }
     
    

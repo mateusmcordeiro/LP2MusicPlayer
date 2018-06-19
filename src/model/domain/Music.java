@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import javax.persistence.Transient;
 /**
  *
  * @author mateu
@@ -36,12 +37,12 @@ public class Music {
     @Column(name="path")
     private String path;
     
+    @Transient
     private File musicFile;
+    @Transient
     private Media pick;
+    @Transient
     public MediaPlayer player;
-    private Duration timeNow;
-    private Duration totalTime;
-    private String totalTimeString;
     
         
     
@@ -52,13 +53,7 @@ public class Music {
         this.musicFile = new File(this.path);
         this.pick  = new Media(this.musicFile.toURI().toString());
         this.player = new MediaPlayer(pick);
-        this.totalTime = player.getMedia().getDuration();
-        this.player.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                timeNow = newValue;
-            }
-        });
+
 
     }
     public Music(Integer id,String name,String path){
@@ -69,12 +64,6 @@ public class Music {
         this.musicFile = new File(this.path);
         this.pick  = new Media(this.musicFile.toURI().toString());
         this.player = new MediaPlayer(pick);
-        this.player.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                timeNow = newValue;
-            }
-        });
         
     }
 
@@ -106,8 +95,9 @@ public class Music {
     public void pause(){
         this.player.pause();
     }
-    public String getTotalTime(){
-        return totalTimeString;
+    public void stop(){
+        this.player.stop();
     }
+
 
 }

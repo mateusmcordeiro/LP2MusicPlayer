@@ -8,6 +8,7 @@ package view;
 import controller.PlayListController;
 
 import java.util.concurrent.TimeUnit;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -24,6 +25,7 @@ public class MenuView extends javax.swing.JFrame {
      */
     public static PlayListController playListController;
     public MediaPlayer player;
+    public static int ButtonEffectIndex;
     
     public MenuView() {
         initComponents();
@@ -31,6 +33,7 @@ public class MenuView extends javax.swing.JFrame {
         this.MidPane.add(initPlayList);
         initPlayList.setVisible(true);
         playListController = new PlayListController();
+        MenuView.ButtonEffectIndex = 0;
         
         
         /*
@@ -55,16 +58,17 @@ public class MenuView extends javax.swing.JFrame {
         desktopPane = new javax.swing.JDesktopPane();
         previousMusicButton = new javax.swing.JButton();
         NextMusicButton = new javax.swing.JButton();
-        sliderMusic = new javax.swing.JSlider();
         CadastroButton = new javax.swing.JButton();
         LoginButton = new javax.swing.JButton();
         MidPane = new javax.swing.JDesktopPane();
-        playButton = new javax.swing.JToggleButton();
         Duration = new javax.swing.JLabel();
         Duration1 = new javax.swing.JLabel();
         Duration2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         nomeMusica = new javax.swing.JLabel();
+        playButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        sliderMusic = new javax.swing.JSlider();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         AbrirButton = new javax.swing.JMenuItem();
@@ -86,8 +90,6 @@ public class MenuView extends javax.swing.JFrame {
             }
         });
 
-        sliderMusic.setValue(0);
-
         CadastroButton.setText("Cadastro");
         CadastroButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,13 +106,6 @@ public class MenuView extends javax.swing.JFrame {
 
         MidPane.setLayout(new javax.swing.OverlayLayout(MidPane));
 
-        playButton.setText("Play");
-        playButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                playButtonActionPerformed(evt);
-            }
-        });
-
         Duration.setText("/");
 
         Duration1.setText("00:00");
@@ -120,6 +115,22 @@ public class MenuView extends javax.swing.JFrame {
         jLabel1.setText("Tocando Agora:");
 
         nomeMusica.setText("Nenhuma Musica");
+
+        playButton.setText("Play");
+        playButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playButtonActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Stop");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        sliderMusic.setValue(0);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Arquivo");
@@ -154,28 +165,28 @@ public class MenuView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(previousMusicButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(playButton)
-                                        .addGap(106, 106, 106)
-                                        .addComponent(NextMusicButton))
-                                    .addComponent(sliderMusic, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Duration1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Duration)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Duration2))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nomeMusica))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(previousMusicButton)
+                                    .addGap(61, 61, 61)
+                                    .addComponent(playButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton1)
+                                    .addGap(83, 83, 83)
+                                    .addComponent(NextMusicButton))
+                                .addComponent(sliderMusic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(Duration1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(Duration)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(Duration2))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(nomeMusica)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(CadastroButton, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -197,20 +208,26 @@ public class MenuView extends javax.swing.JFrame {
                     .addComponent(nomeMusica))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(sliderMusic, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(Duration)
                                 .addComponent(Duration2))
-                            .addComponent(Duration1))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NextMusicButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(playButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(previousMusicButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(Duration1))
+                        .addGap(19, 19, 19))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sliderMusic, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(NextMusicButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(previousMusicButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(playButton)
+                            .addComponent(jButton1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -236,70 +253,87 @@ public class MenuView extends javax.swing.JFrame {
         loginView.setVisible(true);
     }//GEN-LAST:event_LoginButtonActionPerformed
 
-    private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-        if(this.playButton.isSelected()){
-            this.playButton.setText("Pause");
-            
-            
-            this.player = MenuView.playListController.getPlayer();
-            this.player.play();
-            this.nomeMusica.setText(MenuView.playListController.getMusic().getName());
-            
-            System.out.println(MenuView.playListController.getIndex());
-            
-            Duration totalTime = this.player.getMedia().getDuration();
-            String totalTimeString = String.format("%02d:%02d", 
-                    TimeUnit.MILLISECONDS.toMinutes((long) totalTime.toMillis()),
-                    TimeUnit.MILLISECONDS.toSeconds((long) totalTime.toMillis()) -
-                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) totalTime.toMillis())) );
-            Duration2.setText(totalTimeString);
-            sliderMusic.addChangeListener((ov) -> {
-                    if (null != player){
-                        //player.seek(timeTotal.multiply(sliderMusic.getValue() / 100.0));
-                    }else{
-                        sliderMusic.setValue(0);
-                    }
-                });
-            player.currentTimeProperty().addListener((ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) -> {
-                    String TempoLabel = String.format("%02d:%02d",
-                            TimeUnit.MILLISECONDS.toMinutes((long) newValue.toMillis()),
-                            TimeUnit.MILLISECONDS.toSeconds((long) newValue.toMillis()) -
-                                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) newValue.toMillis())) );
-                    
-                    //System.out.println((int) (newValue.divide(timeTotal.toMillis()).toMillis() * 100.0));
-                    Duration1.setText(TempoLabel);
-                    sliderMusic.setValue((int) (newValue.divide(totalTime.toMillis()).toMillis() * 100.0));
-                    });
-           
-        }else{
-            this.playButton.setText("Play");
-            this.player.pause();
-            
-        }
-    }//GEN-LAST:event_playButtonActionPerformed
-
     private void NextMusicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextMusicButtonActionPerformed
-        this.playButton.disable();
+        MenuView.playListController.getMusic().stop();
         if(MenuView.playListController.getIndex() == MenuView.playListController.getTotalNumber() - 1){
            MenuView.playListController.setIndexMusicSelected(0);
            
        }else{
            MenuView.playListController.setIndexMusicSelected(MenuView.playListController.getIndex()+1);
        }
-        this.playButton.enable();
+       MenuView.playListController.getMusic().play();
        this.nomeMusica.setText(MenuView.playListController.getMusic().getName());
+       Duration totalTime = MenuView.playListController.getMusic().player.getMedia().getDuration();
+       this.Listenings(totalTime);
     }//GEN-LAST:event_NextMusicButtonActionPerformed
 
     private void previousMusicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousMusicButtonActionPerformed
-        
+        MenuView.playListController.getMusic().stop();
         if(MenuView.playListController.getIndex() == 0){
            MenuView.playListController.setIndexMusicSelected(MenuView.playListController.getTotalNumber() - 1);
        }else{
            MenuView.playListController.setIndexMusicSelected(MenuView.playListController.getIndex()-1);
        }
-       this.playButton.enable();
+        MenuView.playListController.getMusic().play();
        this.nomeMusica.setText(MenuView.playListController.getMusic().getName());
+        Duration totalTime = MenuView.playListController.getMusic().player.getMedia().getDuration();
+        this.Listenings(totalTime);
     }//GEN-LAST:event_previousMusicButtonActionPerformed
+
+    private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
+        if(MenuView.ButtonEffectIndex == 0){
+            this.playButton.setText("Pause");
+            MenuView.playListController.getMusic().play();
+            this.nomeMusica.setText(MenuView.playListController.getMusic().getName());  
+            
+            
+            Duration totalTime = MenuView.playListController.getMusic().player.getMedia().getDuration();
+            this.Listenings(totalTime);
+            
+            MenuView.ButtonEffectIndex = 1;
+        }else{
+            this.playButton.setText("Play");
+            MenuView.playListController.getMusic().pause();
+            MenuView.ButtonEffectIndex = 0;
+        }
+    }//GEN-LAST:event_playButtonActionPerformed
+    public void Listenings(Duration TotalTime){
+        String totalTimeString = String.format("%02d:%02d", 
+                TimeUnit.MILLISECONDS.toMinutes((long) TotalTime.toMillis()),
+                TimeUnit.MILLISECONDS.toSeconds((long) TotalTime.toMillis()) -
+                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) TotalTime.toMillis())) 
+        );
+        Duration2.setText(totalTimeString);
+            
+        sliderMusic.addChangeListener((ov) -> {
+            if (null != MenuView.playListController.getMusic().player){
+                //MenuView.playListController.getMusic().player.seek(TotalTime.multiply(sliderMusic.getValue() / 100.0));
+            }else{
+                sliderMusic.setValue(0);
+            }
+        });
+        MenuView.playListController.getMusic().player.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                String TempoAgoraLabel = String.format(
+                        "%02d:%02d",
+                        TimeUnit.MILLISECONDS.toMinutes((long) newValue.toMillis()),
+                        TimeUnit.MILLISECONDS.toSeconds((long) newValue.toMillis()) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) newValue.toMillis())) 
+                );
+                //System.out.println((int) (newValue.divide(TotalTime.toMillis()).toMillis() * 100));
+                Duration1.setText(TempoAgoraLabel);
+                
+                sliderMusic.setValue((int) (newValue.divide(TotalTime.toMillis()).toMillis() * 100));
+               
+            }
+        });
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.playButton.setText("Play");
+        MenuView.ButtonEffectIndex = 0;
+        MenuView.playListController.getMusic().stop();;
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -351,10 +385,11 @@ public class MenuView extends javax.swing.JFrame {
     private javax.swing.JButton NextMusicButton;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel nomeMusica;
-    private javax.swing.JToggleButton playButton;
+    private javax.swing.JButton playButton;
     private javax.swing.JButton previousMusicButton;
     private javax.swing.JSlider sliderMusic;
     // End of variables declaration//GEN-END:variables
