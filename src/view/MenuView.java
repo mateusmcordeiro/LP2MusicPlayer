@@ -10,7 +10,6 @@ import controller.PlayListController;
 import java.util.concurrent.TimeUnit;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 
@@ -24,7 +23,6 @@ public class MenuView extends javax.swing.JFrame {
      * Creates new form MenuView
      */
     public static PlayListController playListController;
-    public MediaPlayer player;
     public static int ButtonEffectIndex;
     
     public MenuView() {
@@ -34,16 +32,6 @@ public class MenuView extends javax.swing.JFrame {
         initPlayList.setVisible(true);
         playListController = new PlayListController();
         MenuView.ButtonEffectIndex = 0;
-        
-        
-        /*
-        this.player.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                
-            }
-        });
-        */
     }
    
     /**

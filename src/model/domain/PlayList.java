@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.swing.DefaultListModel;
 
 /**
@@ -33,6 +34,8 @@ public class PlayList {
     
     @OneToMany
     private List<Music> Musics; 
+    
+    @Transient
     private DefaultListModel listModel;
 
     public PlayList() {

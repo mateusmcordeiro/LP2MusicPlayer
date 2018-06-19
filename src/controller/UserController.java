@@ -6,7 +6,6 @@ import model.domain.User;
 import model.domain.UserException;
 import view.LoginView;
 import view.MenuView;
-import view.UserLoggedIn;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -41,7 +40,6 @@ public class UserController {
             setUserLoggedIn(user_try);
             setUserDigitado(new User());
             
-            UserLoggedIn userView  = new UserLoggedIn();
             /*
                 MenuView.MidPane.add(userView);
                 userView.setVisible(true);
